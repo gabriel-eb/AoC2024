@@ -13,10 +13,11 @@ func Historian(fileName string) int {
 	fmt.Println("--- Day 1: Historian Hysteria ---")
 	lines := utils.ReadFile(fileName)
 	lists := getLists(lines)
-	sortedLists := sortLists(lists)
+	sort.Ints(lists[0])
+	sort.Ints(lists[1])
 	sum := 0
-	for i := range sortedLists[0] {
-		op := sortedLists[0][i] - sortedLists[1][i]
+	for i := range lists[0] {
+		op := lists[0][i] - lists[1][i]
 		if op < 0 {
 			op *= -1
 		}
@@ -24,16 +25,6 @@ func Historian(fileName string) int {
 	}
 	fmt.Printf("Result: %d\n", sum)
 	return sum
-}
-
-func sortLists(lists [2][]int) [2][]int {
-	sort.Slice(lists[0], func(i, j int) bool {
-		return lists[0][i] < lists[0][j]
-	})
-	sort.Slice(lists[1], func(i, j int) bool {
-		return lists[1][i] < lists[1][j]
-	})
-	return lists
 }
 
 func getLists(lines []string) [2][]int {

@@ -37,24 +37,6 @@ func TestHistorian(t *testing.T) {
 			}
 		}
 	})
-	t.Run("test sort lists function", func(t *testing.T) {
-		got := sortLists([2][]int{{4, 1, 12, 3}, {200, 2, 4, 200}})
-		want := [2][]int{{1, 3, 4, 12}, {2, 4, 200, 200}}
-
-		if len(got) != len(want) {
-			t.Errorf("got %v want %v", got, want)
-			return
-		}
-
-		for i := range want {
-			for j := range want[i] {
-				if got[i][j] != want[i][j] {
-					t.Errorf("got %v want %v", got, want)
-					return
-				}
-			}
-		}
-	})
 }
 
 func TestHistorianPart2(t *testing.T) {
