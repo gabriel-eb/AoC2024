@@ -1,6 +1,7 @@
 package day3
 
 import (
+	"fmt"
 	"regexp"
 	"strings"
 
@@ -18,6 +19,7 @@ func CompileMults(fileName string) int {
 			sum += numA * numB
 		}
 	}
+	fmt.Printf("Result: %d\n", sum)
 	return sum
 }
 
@@ -32,6 +34,7 @@ func CompileMultsPart2(fileName string) int {
 			sum += numA * numB
 		}
 	}
+	fmt.Printf("Result: %d\n", sum)
 	return sum
 }
 
