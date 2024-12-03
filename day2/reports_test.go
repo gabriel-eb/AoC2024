@@ -36,3 +36,22 @@ func TestAnalyzeReports(t *testing.T) {
 		}
 	})
 }
+
+func TestAnalyzeReportsPart2(t *testing.T) {
+	t.Run("example input", func(t *testing.T) {
+		got := AnalyzeReportsPart2("test_input")
+		want := 10
+
+		if got != want {
+			t.Errorf("got %d want %d", got, want)
+		}
+	})
+	t.Run("REAL INPUT: analyze function", func(t *testing.T) {
+		got := AnalyzeReportsPart2("input")
+		want := 439
+
+		if got != want {
+			t.Errorf("got %d want %d", got, want)
+		}
+	})
+}
