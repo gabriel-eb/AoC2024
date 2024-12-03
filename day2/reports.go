@@ -13,20 +13,16 @@ func AnalyzeReports(fileName string) int {
 	lines := utils.ReadFile(fileName)
 	sum := 0
 	for i := range lines {
-		numbers := strings.Split(lines[i], " ")
+		lines := strings.Split(lines[i], " ")
+		numbers := convertLinesToInts(lines)
 		isSafe := false
-		first, err := strconv.Atoi(numbers[0])
-		utils.Check(err)
-		second, err2 := strconv.Atoi(numbers[1])
-		utils.Check(err2)
-		isAscending := first-second > 0
+		isAscending := numbers[0]-numbers[1] > 0
 		for i := 0; i < len(numbers)-1; i++ {
-			num, err := strconv.Atoi(numbers[i])
-			utils.Check(err)
-			num2, err2 := strconv.Atoi(numbers[i+1])
-			utils.Check(err2)
-			compare := num - num2
-			isSafe = compare < 4 && compare > -4 && compare != 0 && isAscending == (compare > 0)
+			compare := numbers[i] - numbers[i+1]
+			isSafe = compare < 4 &&
+				compare > -4 &&
+				compare != 0 &&
+				isAscending == (compare > 0)
 			if !isSafe {
 				break
 			}
@@ -36,4 +32,14 @@ func AnalyzeReports(fileName string) int {
 		}
 	}
 	return sum
+}
+
+func convertLinesToInts(lines []string) []int {
+	numbers := []int{}
+	for i := range lines {
+		num, err := strconv.Atoi(lines[i])
+		utils.Check(err)
+		numbers = append(numbers, num)
+	}
+	return numbers
 }
