@@ -27,11 +27,45 @@ func CompileMults(fileName string) int {
 }
 
 func CompileMultsPart2(fileName string) int {
-	return 0
+	lines := utils.ReadFile(fileName)
+	sum := 0
+	enable := true
+	for _, line := range lines {
+		mults := getEnabledMults(line, &enable)
+		for _, mult := range mults {
+			lastIndex := len(mult) - 1
+			strToMult := mult[4:lastIndex]
+			numbersToMult := strings.Split(strToMult, ",")
+			numA := atoiCatch(numbersToMult[0])
+			numB := atoiCatch(numbersToMult[1])
+			sum += numA * numB
+		}
+	}
+	return sum
 }
 
 func atoiCatch(str string) int {
 	num, err := strconv.Atoi(str)
 	utils.Check(err)
 	return num
+}
+
+func getEnabledMults(line string, enable *bool) []string {
+	rx := regexp.MustCompile(`mul\(\d+,\d+\)|do\(\)|don\'t\(\)`)
+	matches := rx.FindAllString(line, len(line))
+	mults := []string{}
+	for _, match := range matches {
+		// println(match)
+		evaluate := match[:3]
+		if evaluate == "don" {
+			*enable = false
+		}
+		if evaluate == "do(" {
+			*enable = true
+		}
+		if *enable && evaluate == "mul" {
+			mults = append(mults, match)
+		}
+	}
+	return mults
 }

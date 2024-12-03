@@ -20,3 +20,22 @@ func TestAnalyzeReports(t *testing.T) {
 		}
 	})
 }
+
+func TestCompileMultsPart2(t *testing.T) {
+	t.Run("example input", func(t *testing.T) {
+		got := CompileMultsPart2("test_input_2")
+		want := 48
+
+		if got != want {
+			t.Errorf("got %d want %d", got, want)
+		}
+	})
+	t.Run("REAL INPUT: analyze function", func(t *testing.T) {
+		got := CompileMultsPart2("input")
+		want := 63866497
+
+		if got != want {
+			t.Errorf("got %d want %d", got, want)
+		}
+	})
+}
