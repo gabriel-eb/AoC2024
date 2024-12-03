@@ -18,10 +18,8 @@ func CompileMults(fileName string) int {
 			lastIndex := len(mult) - 1
 			strToMult := mult[4:lastIndex]
 			numbersToMult := strings.Split(strToMult, ",")
-			numA, errA := strconv.Atoi(numbersToMult[0])
-			utils.Check(errA)
-			numB, errB := strconv.Atoi(numbersToMult[1])
-			utils.Check(errB)
+			numA := atoiCatch(numbersToMult[0])
+			numB := atoiCatch(numbersToMult[1])
 			sum += numA * numB
 		}
 	}
@@ -30,4 +28,10 @@ func CompileMults(fileName string) int {
 
 func CompileMultsPart2(fileName string) int {
 	return 0
+}
+
+func atoiCatch(str string) int {
+	num, err := strconv.Atoi(str)
+	utils.Check(err)
+	return num
 }
