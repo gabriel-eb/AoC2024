@@ -10,7 +10,6 @@ import (
 )
 
 func Historian(fileName string) int {
-	fmt.Println("--- Day 1: Historian Hysteria ---")
 	lines := utils.ReadFile(fileName)
 	lists := getLists(lines)
 	sort.Ints(lists[0])
@@ -46,7 +45,6 @@ func getLists(lines []string) [2][]int {
 }
 
 func HistorianPart2(fileName string) int {
-	fmt.Println("--- Day 1, Part 2: Historian Hysteria ---")
 	lines := utils.ReadFile(fileName)
 	lists := getLists(lines)
 	// It is not necessary to sort
