@@ -2,7 +2,6 @@ package day3
 
 import (
 	"regexp"
-	"strconv"
 	"strings"
 
 	"github.com/gabriel-eb/AoC2024/utils"
@@ -15,11 +14,7 @@ func CompileMults(fileName string) int {
 		rx := regexp.MustCompile(`mul\(\d+,\d+\)`)
 		mults := rx.FindAllString(line, len(line))
 		for _, mult := range mults {
-			lastIndex := len(mult) - 1
-			strToMult := mult[4:lastIndex]
-			numbersToMult := strings.Split(strToMult, ",")
-			numA := atoiCatch(numbersToMult[0])
-			numB := atoiCatch(numbersToMult[1])
+			numA, numB := getNumbers(mult)
 			sum += numA * numB
 		}
 	}
@@ -33,21 +28,20 @@ func CompileMultsPart2(fileName string) int {
 	for _, line := range lines {
 		mults := getEnabledMults(line, &enable)
 		for _, mult := range mults {
-			lastIndex := len(mult) - 1
-			strToMult := mult[4:lastIndex]
-			numbersToMult := strings.Split(strToMult, ",")
-			numA := atoiCatch(numbersToMult[0])
-			numB := atoiCatch(numbersToMult[1])
+			numA, numB := getNumbers(mult)
 			sum += numA * numB
 		}
 	}
 	return sum
 }
 
-func atoiCatch(str string) int {
-	num, err := strconv.Atoi(str)
-	utils.Check(err)
-	return num
+func getNumbers(mult string) (int, int) {
+	lastIndex := len(mult) - 1
+	strToMult := mult[4:lastIndex]
+	numbersToMult := strings.Split(strToMult, ",")
+	numA := utils.AtoiCatch(numbersToMult[0])
+	numB := utils.AtoiCatch(numbersToMult[1])
+	return numA, numB
 }
 
 func getEnabledMults(line string, enable *bool) []string {
@@ -55,16 +49,15 @@ func getEnabledMults(line string, enable *bool) []string {
 	matches := rx.FindAllString(line, len(line))
 	mults := []string{}
 	for _, match := range matches {
-		// println(match)
-		evaluate := match[:3]
-		if evaluate == "don" {
+		switch match[:3] {
+		case "mul":
+			if *enable {
+				mults = append(mults, match)
+			}
+		case "don":
 			*enable = false
-		}
-		if evaluate == "do(" {
+		case "do(":
 			*enable = true
-		}
-		if *enable && evaluate == "mul" {
-			mults = append(mults, match)
 		}
 	}
 	return mults
